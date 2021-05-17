@@ -46,4 +46,14 @@ http://localhost:9001/claims
 For more details about pagination and relationships, see [json-server docs](https://www.npmjs.com/package/json-server)
 
 
-The 
+
+## Test!
+To run the unit tests 
+
+```
+yarn test:unit
+```
+Add optional flag `--watch` to avoid running the test in the background. It waits for changes in the file system and automatically run test once new changes are detected.
+```
+yarn test:unit --watch
+```

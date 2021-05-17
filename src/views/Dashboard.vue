@@ -31,6 +31,7 @@
 
       <template v-if="showBarChart">
       <Bar
+          id="barChartId"
           :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
           :labels="barData.labels"
           :colors="barChartDataSet.backgroundColor"
@@ -44,6 +45,7 @@
 
       <br>
           <Doughnut
+              id="doughnutChartId"
               :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
               :labels="barData.labels"
               :colors="barChartDataSet.borderColor"

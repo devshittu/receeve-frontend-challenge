@@ -14,7 +14,7 @@
     "allowJs": true,
     "baseUrl": ".",
     "resolveJsonModule": true,
-    "types": [ "webpack-env", "node"],
+    "types": [ "webpack-env", "node", "@types/jest"],
     "paths": {
       "@/*": ["src/*"]
     },

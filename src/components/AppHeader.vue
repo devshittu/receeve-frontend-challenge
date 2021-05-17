@@ -60,12 +60,12 @@
             <router-link to="/login" class="navbar-item" >
               <b-icon
                   pack="fa"
-                  icon=" fa-sign-out"
+                  icon=" fa-sign-in"
                   size="is-medium">
               </b-icon>
 
               &nbsp;
-              <span>Logout</span></router-link>
+              <span>Sign in</span></router-link>
           </div>
         </div>
       </div>

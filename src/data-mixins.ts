@@ -14,19 +14,23 @@ export default class DataMixins extends Vue {
         return this.allClaims
     }
 
-    mounted(): void {
+    initializeAppData() {
         account.fetchAllAccounts().then(() => {
             this.accounts = account.allAccounts
         })
 
         claim.fetchAllClaims().then(() => {
             this.allClaims = claim.allClaims
-                claim.allClaims.find(x => {
+            claim.allClaims.find(x => {
                 if (x.accountId === this.$route.params.accountId) {
                     this.claims.push(x)
                 } else return null
             })
         })
+    }
+    mounted(): void {
+        this.initializeAppData();
 
     }
+
 }
