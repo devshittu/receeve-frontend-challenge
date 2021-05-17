@@ -1,0 +1,195 @@
+<template>
+  <div>
+
+    <section class="hero ">
+      <div class="hero-body px-0">
+
+        <p class="title">
+          <span>Account List</span>
+        </p>
+        <p class="subtitle pt-5">
+          <span>The following table shows the list of debtor accounts. <em>Click the more button to show brief info about the account</em></span>
+        </p>
+      </div>
+    </section>
+    <section>
+      <b-field grouped group-multiline>
+        <b-select v-model="defaultSortDirection">
+          <option value="asc">Default sort direction: ASC</option>
+          <option value="desc">Default sort direction: DESC</option>
+        </b-select>
+        <b-select v-model="perPage" :disabled="!isPaginated">
+          <option value="5">5 per page</option>
+          <option value="10">10 per page</option>
+          <option value="15">15 per page</option>
+          <option value="20">20 per page</option>
+        </b-select>
+        <div class="control">
+          <b-button
+              label="Set page to 2"
+              :disabled="!isPaginated"
+              @click="currentPage = 2"/>
+        </div>
+        <div class="control is-flex">
+          <b-switch v-model="isPaginated" type="is-info">Paginated</b-switch>
+        </div>
+        <div class="control is-flex">
+          <b-switch v-model="isPaginationSimple" :disabled="!isPaginated" type="is-info">Simple pagination</b-switch>
+        </div>
+        <div class="control is-flex">
+          <b-switch v-model="isPaginationRounded" :disabled="!isPaginated" type="is-info">Rounded pagination</b-switch>
+        </div>
+        <b-select v-model="paginationPosition" :disabled="!isPaginated">
+          <option value="bottom">bottom pagination</option>
+          <option value="top">top pagination</option>
+          <option value="both">both</option>
+        </b-select>
+        <b-select v-model="sortIcon">
+          <option value="arrow-up">Arrow sort icon</option>
+          <option value="menu-up">Caret sort icon</option>
+          <option value="chevron-up">Chevron sort icon</option>
+        </b-select>
+        <b-select v-model="sortIconSize">
+          <option value="is-small">Small sort icon</option>
+          <option value="">Regular sort icon</option>
+          <option value="is-medium">Medium sort icon</option>
+          <option value="is-large">Large sort icon</option>
+        </b-select>
+      </b-field>
+
+      <b-table
+          :data="accounts"
+          :paginated="isPaginated"
+          :per-page="perPage"
+          :current-page.sync="currentPage"
+          :pagination-simple="isPaginationSimple"
+          :pagination-position="paginationPosition"
+          :default-sort-direction="defaultSortDirection"
+          :pagination-rounded="isPaginationRounded"
+          :sort-icon="sortIcon"
+          :sort-icon-size="sortIconSize"
+
+          ref="accountTable"
+          detailed
+          detail-key="id"
+          detail-transition="fade"
+          :show-detail-icon="false"
+          :opened-detailed="[1]"
+
+          type="is-info"
+
+          default-sort="user.fullName"
+          aria-next-label="Next page"
+          aria-previous-label="Previous page"
+          aria-page-label="Page"
+          aria-current-label="Current page"
+          icon-pack="fas">
+
+
+
+        <b-table-column field="debtor.fullName" label="Name" sortable v-slot="props">
+
+          <router-link :to="'/accounts/'+props.row.id+'/details'" class="is-text">
+            {{ props.row.debtor.title !== null ? props.row.debtor.title : '' }}
+          {{ props.row.debtor.firstName + ' ' + props.row.debtor.lastName }}
+          </router-link>
+        </b-table-column>
+
+        <b-table-column field="debtor.email" label="Email" sortable v-slot="props">
+          {{ props.row.debtor.email }}
+        </b-table-column>
+
+        <b-table-column field="debtor.mobilePhone" label="Phone" sortable v-slot="props">
+          {{ props.row.debtor.mobilePhone }}
+        </b-table-column>
+
+        <b-table-column field="viewMore" label="Action" sortable centered v-slot="props">
+
+          <b-button type="is-info is-light"  class="button is-link is-outlined"
+             @click="toggleAccountDetailsInTable(props.row)">
+            <b-icon
+                pack="fas"
+                icon="chevron-down">
+            </b-icon>
+            <span>More</span>
+          </b-button>
+        </b-table-column>
+
+
+        <template #detail="props">
+          <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img id="company-logo" alt="Vue logo" src="@/assets/logo.png">
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>
+                    {{ props.row.debtor.title !== null ? props.row.debtor.title : '' }}
+                    {{ props.row.debtor.firstName + ' ' + props.row.debtor.lastName }}</strong>
+                  <br>
+
+                  <strong>Address:</strong> <span>{{ props.row.debtor.address.address }}</span> <br>
+                  <strong>City:</strong> <span>{{ props.row.debtor.address.city }}</span> <br>
+                  <strong>State:</strong>
+                  <span>{{ props.row.debtor.address.state }} ({{ props.row.debtor.address.zip }})</span> <br>
+                  <strong>Country:</strong> <span>{{ props.row.debtor.address.country }}</span> <br>
+
+                  <br>
+                  <span> See {{ props.row.debtor.firstName }}'s claims history and records
+                  <router-link :to="'/accounts/'+props.row.id+'/details'" class="is-text">
+
+                    <span>here &raquo;</span>
+                  </router-link>
+              </span>
+                </p>
+              </div>
+            </div>
+          </article>
+        </template>
+
+      </b-table>
+    </section>
+  </div>
+</template>
+
+<script lang="ts">
+import {Component} from "vue-property-decorator";
+import account from '@/store/modules/accounts'
+import {AccountDataModel} from "@/store/models";
+import {mixins} from "vue-class-component";
+import DataMixins from "@/data-mixins";
+
+@Component
+export default class Account extends mixins(DataMixins) {
+  accounts: AccountDataModel[] = [];
+  isPaginated = true;
+  isPaginationSimple = false;
+  isPaginationRounded = false;
+  paginationPosition = 'bottom';
+  defaultSortDirection = 'asc';
+  sortIcon = 'arrow-up';
+  sortIconSize = 'is-small';
+  currentPage = 1;
+  perPage = 20
+
+
+  toggleAccountDetailsInTable(row: AccountDataModel) {
+    // @ts-ignore
+    this.$refs.accountTable.toggleDetails(row)
+  }
+
+  created(): void {
+    account.fetchAllAccounts().then(() => {
+      this.accounts = account.allAccounts
+    })
+
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

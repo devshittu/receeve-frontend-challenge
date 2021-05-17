@@ -1,0 +1,21 @@
+/*body{background-color: black}*/
+
+.header, .top-nav{background-color: #0a2860}
+
+.bottom-nav{}
+.bottom-nav .navbar-item .icon:first-child:not(:last-child) {
+    margin-left: calc(-0.5em - 1px);
+    margin-right: 0.25em;
+}
+
+.main-wrapper{padding-left: 0; padding-right: 0;}
+a, a.navbar-item:hover, .navbar-link{color: #527fff}
+.pagination-link.is-current {
+    background-color: #527fff;
+    border-color: #527fff;
+    color: #fff;
+}
+.pagination-link {
+    border-color: #527fff;
+    border-width: 2px;
+}
