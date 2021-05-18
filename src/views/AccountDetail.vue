@@ -11,6 +11,7 @@
 
       <div class="media-content">
         <div class="content">
+<!--          {{accountDetails2.debtor}}-->
           <p>
             <strong class="title pb-1">
               {{ accountDetails.debtor.title !== null ? accountDetails.debtor.title : '' }}
@@ -118,13 +119,15 @@
 import {Component} from "vue-property-decorator";
 import {mixins} from "vue-class-component";
 
-import {AccountDataModel} from "@/store/models";
+// import {AccountDataModel} from "@/store/models";
 import account from "@/store/modules/accounts";
 import DataMixins from "@/data-mixins";
+import {AccountDataModel} from "@/store/models";
 
 @Component
 export default class AccountDetail extends mixins(DataMixins) {
-  // accountDetails: AccountDataModel = null;
+  accountDetails: AccountDataModel | null | undefined = null;
+  accountLoading = true;
   isPaginated = true;
   isPaginationSimple = false;
   isPaginationRounded = false;
@@ -135,12 +138,10 @@ export default class AccountDetail extends mixins(DataMixins) {
   currentPage = 1;
   perPage = 20
 
-  get accountDetails(): AccountDataModel | undefined {
-    return this.accounts?.find(x => (x.id === this.$route.params.accountId) ? x : undefined)
-  }
-
-  get accountLoading(): boolean {
-    return account.accountLoading || false
+  mounted():void{
+    account.fetchSingleAccountInfo(this.$route.params.accountId).then(() =>{
+      setTimeout(() => {this.accountDetails = account.singleAccount; this.accountLoading= false}, 20);
+    })
   }
 }
 </script>

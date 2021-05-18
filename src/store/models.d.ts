@@ -12,6 +12,7 @@ export interface DebtorDataModel {
     address: AddressDataModel;
     mobilePhone: string;
     email: string;
+    totalClaims?: number|null;
 }
 export interface AddressDataModel {
     address: string;
@@ -50,6 +51,9 @@ export interface UserSignInSubmit {
 
 export interface AccountResponse {
     accounts: AccountDataModel[] | null
+}
+export interface SingleAccountResponse {
+    account: AccountDataModel;
 }
 export interface ClaimResponse {
     claims: ClaimDataModel[] | null

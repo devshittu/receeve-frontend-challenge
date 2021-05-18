@@ -107,6 +107,7 @@
                     {{ props.row.debtor.firstName + ' ' + props.row.debtor.lastName }}</strong>
                   <br>
 
+                  <strong>Account Claims:</strong> <span>{{ props.row.debtor.totalClaims !== null ? props.row.debtor.totalClaims : '' }}</span> <br>
                   <strong>Address:</strong> <span>{{ props.row.debtor.address.address }}</span> <br>
                   <strong>City:</strong> <span>{{ props.row.debtor.address.city }}</span> <br>
                   <strong>State:</strong>
@@ -137,6 +138,7 @@ import account from '@/store/modules/accounts'
 import {AccountDataModel} from "@/store/models";
 import {mixins} from "vue-class-component";
 import DataMixins from "@/data-mixins";
+import claims from "@/store/modules/claims";
 
 @Component
 export default class Account extends mixins(DataMixins) {
@@ -149,8 +151,15 @@ export default class Account extends mixins(DataMixins) {
 
 
   toggleAccountDetailsInTable(row: AccountDataModel) {
-    // @ts-ignore
-    this.$refs.accountTable.toggleDetails(row)
+    console.log('get the total number of claims for the account', row, typeof row)
+    this.getSingleAccountClaims(row.id).then(() => {
+      this.claims = claims.accountClaims
+      row.debtor["totalClaims"] = this.claims.length
+    });
+    setTimeout(() => {
+      // @ts-ignore
+      this.$refs.accountTable.toggleDetails(row)
+    }, 200);
   }
 
   created(): void {

@@ -13,18 +13,28 @@ import * as api from "@/store/api";
 
 class AccountsModule extends  VuexModule{
     allAccounts: AccountDataModel[] = []
+    singleAccount?: AccountDataModel | null = null;
     accountLoading: boolean = true
 
     @Mutation
     setAccounts(accounts: AccountDataModel[]) {
         this.allAccounts = accounts
-        setTimeout(() => {this.accountLoading = false}, 1000);
+        setTimeout(() => {this.accountLoading = false}, 200);
 
     }
 
     @Action({commit: 'setAccounts'})
     async fetchAllAccounts(){
         return await api.getAccounts()
+    }
+
+    @Mutation
+    setSingleAccountInfo(model: AccountDataModel) {
+        this.singleAccount = model
+    }
+    @Action({commit: 'setSingleAccountInfo'})
+    async fetchSingleAccountInfo(accountId: string){
+        return await api.getSingleAccount(accountId)
     }
 }
 

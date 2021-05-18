@@ -2,7 +2,7 @@ import Vue from "vue";
 import Component  from "vue-class-component";
 import account from "@/store/modules/accounts";
 import claim from "@/store/modules/claims";
-import {AccountDataModel, ClaimDataModel} from "@/store/models";
+import {AccountDataModel, ClaimDataModel, ClaimResponse} from "@/store/models";
 @Component
 export default class DataMixins extends Vue {
     accounts: AccountDataModel[] | null = null
@@ -27,14 +27,21 @@ export default class DataMixins extends Vue {
             // })
         })
         const accountId: string | undefined = this.$route.params.accountId;
-        // console.log(`Type of account Id`, (typeof accountId), (typeof accountId) === `string`)
         if (accountId) {
-            claim.fetchAllAccountClaims(accountId).then(() => {
+            this.getSingleAccountClaims(accountId).then(() => {
                 this.claims = claim.accountClaims
-            })
+            });
         }
     }
-    mounted(): void {
+
+    getSingleAccountClaims(accountId: string): Promise<ClaimResponse | undefined> {
+        return claim.fetchAllAccountClaims(accountId)
+    }
+    getSingleAccount(accountId: string): Promise<ClaimResponse | undefined> {
+        return claim.fetchAllAccountClaims(accountId)
+    }
+
+    created(): void {
         this.initializeAppData();
 
     }

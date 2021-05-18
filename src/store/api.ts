@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AccountResponse, ClaimResponse, UserSignInSubmit} from './models'
+import {AccountDataModel, AccountResponse, ClaimResponse, UserSignInSubmit} from './models'
 
 export const receeveApi = axios.create({
     baseURL: 'http://localhost:9001'
@@ -9,6 +9,14 @@ export async function getAccounts(): Promise<AccountResponse | undefined>{
     try {
         const response = await receeveApi.get('/accounts')
         return response.data as AccountResponse;
+    } catch (e){
+        console.error(e)
+    }
+}
+export async function getSingleAccount(accountId: string): Promise<AccountDataModel | undefined>{
+    try {
+        const response = await receeveApi.get(`/accounts/${accountId}`)
+        return response.data as AccountDataModel;
     } catch (e){
         console.error(e)
     }
