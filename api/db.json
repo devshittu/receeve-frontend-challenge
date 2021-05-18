@@ -3892,5 +3892,13 @@
       "dueDate": "2020-02-13",
       "status": "OPEN"
     }
-  ]
+  ],
+  "user": {
+    "email": "ks@receeve.com",
+    "password": "12345678",
+    "token": "jwt.token.here",
+    "username": "karina",
+    "bio": "I work at HR, Receeve",
+    "image": null
+  }
 }

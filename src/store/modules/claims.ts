@@ -13,15 +13,23 @@ import * as api from "@/store/api";
 
 class ClaimsModule extends  VuexModule{
     allClaims: ClaimDataModel[] = [];
-    // allAccountClaims: ClaimDataModel[] = [];
+    accountClaims: ClaimDataModel[] = [];
 
     @Mutation
     setAllClaims(claims: ClaimDataModel[]) {
         this.allClaims = claims
     }
+    @Mutation
+    setAccountClaims(claims: ClaimDataModel[]) {
+        this.accountClaims = claims
+    }
     @Action({commit: 'setAllClaims'})
     async fetchAllClaims(){
         return await api.getClaims()
+    }
+    @Action({commit: 'setAccountClaims'})
+    async fetchAllAccountClaims(accountId: string){
+        return await api.getAnAccountClaims(accountId)
     }
 }
 

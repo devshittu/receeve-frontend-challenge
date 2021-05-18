@@ -17,10 +17,10 @@
 
 
         <b-field position="is-centered">
-          <b-input placeholder="Search..." type="search" icon-pack="fas" icon="search">
+          <b-input placeholder="Search..." type="search" icon-pack="fas" icon="search" size="is-medium">
           </b-input>
           <p class="control">
-            <b-button label="Search" type="is-info" />
+            <b-button label="Search" type="is-info" size="is-medium" />
           </p>
         </b-field>
 
@@ -38,6 +38,7 @@
         </div>
 
       </b-field>
+      <hr>
 
       <b-table
           :data="accounts"

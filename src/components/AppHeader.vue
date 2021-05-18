@@ -4,7 +4,7 @@
     <nav class="navbar top-nav">
       <div class="container ">
         <div class="navbar-brand">
-          <a class="navbar-item" href="https://ericmkelley.com">
+          <a class="navbar-item" href="/">
             <img src="https://receeve.com/wp-content/uploads/2020/08/receeve_logo.svg">
           </a>
           <div class="navbar-burger burger" data-target="">

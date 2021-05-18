@@ -20,12 +20,19 @@ export default class DataMixins extends Vue {
 
         claim.fetchAllClaims().then(() => {
             this.allClaims = claim.allClaims
-            claim.allClaims.find(x => {
-                if (x.accountId === this.$route.params.accountId) {
-                    this.claims.push(x)
-                } else return null
-            })
+            // claim.allClaims.find(x => {
+            //     if (x.accountId === this.$route.params.accountId) {
+            //         this.claims.push(x)
+            //     } else return null
+            // })
         })
+        const accountId: string | undefined = this.$route.params.accountId;
+        // console.log(`Type of account Id`, (typeof accountId), (typeof accountId) === `string`)
+        if (accountId) {
+            claim.fetchAllAccountClaims(accountId).then(() => {
+                this.claims = claim.accountClaims
+            })
+        }
     }
     mounted(): void {
         this.initializeAppData();

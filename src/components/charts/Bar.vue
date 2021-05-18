@@ -70,7 +70,6 @@ let jsobj: object = '{  "type":"bar",
         }
       ],
     };
-    console.log(`This entered chart Data`, chartData)
     this.createChart(chartData);
   }
 
