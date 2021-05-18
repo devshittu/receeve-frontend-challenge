@@ -8,7 +8,9 @@
           <span>Account List</span>
         </p>
         <p class="subtitle pt-5">
-          <span>The following table shows the list of debtor accounts. <em>Click the more button to show brief info about the account</em></span>
+          <span>The following table shows the list of debtor accounts.
+            <br><em>Click the more button to show brief info about the account</em>
+            <br><em>To use the search box, enter a keyword such as: Missouri, Spencer, or anything you can remember about the desired account(s). Then click the blue search button to begin.</em></span>
         </p>
       </div>
     </section>
@@ -17,31 +19,31 @@
 
 
         <b-field position="is-centered">
-          <b-input placeholder="Search..." type="search" icon-pack="fas" icon="search" size="is-medium">
+          <b-input placeholder="Search..." v-model="searchString" type="search" icon-pack="fas" icon="search" size="is-medium">
           </b-input>
           <p class="control">
-            <b-button label="Search" type="is-info" size="is-medium" />
+            <b-button label="Search" type="is-info" @click="searchAccounts" size="is-medium" />
           </p>
         </b-field>
 
-        <b-select v-model="perPage" :disabled="!isPaginated">
+        <b-select v-model="perPage" :disabled="!isPaginated" size="is-medium">
           <option value="5">5 per page</option>
           <option value="10">10 per page</option>
           <option value="15">15 per page</option>
           <option value="20">20 per page</option>
         </b-select>
         <div class="control is-flex">
-          <b-switch v-model="isPaginated" type="is-info">Paginated</b-switch>
+          <b-switch v-model="isPaginated" type="is-info" size="is-medium">Paginated</b-switch>
         </div>
         <div class="control is-flex">
-          <b-switch v-model="isPaginationSimple" :disabled="!isPaginated" type="is-info">Simple pagination</b-switch>
+          <b-switch v-model="isPaginationSimple" :disabled="!isPaginated" type="is-info" size="is-medium">Simple pagination</b-switch>
         </div>
 
       </b-field>
       <hr>
 
       <b-table
-          :data="accounts"
+          :data="loadedAccounts"
           :paginated="isPaginated"
           :per-page="perPage"
           :pagination-simple="isPaginationSimple"
@@ -143,12 +145,40 @@ import claims from "@/store/modules/claims";
 @Component
 export default class Account extends mixins(DataMixins) {
   accounts: AccountDataModel[] = [];
+  // loadedAccounts: AccountDataModel[] = [];
+  // old accounts: AccountDataModel[] = [];
+  populateAccount : AccountDataModel[] = [];
+  searchedAccounts: AccountDataModel[] = [];
   isPaginated = true;
   isPaginationSimple = false;
   sortIconSize = 'is-small';
   // currentPage = 1;
   perPage = 20
+  searchString: string = ''
 
+  searchAccounts(){
+    if (this.searchString !== '' && this.searchString.length > 0){
+      // search logic here.
+      //TODO: Use debounce in case of typeahead or auto-loading
+      console.log('')
+      account.searchAccounts(this.searchString).then(()=>{
+        this.searchedAccounts = account.searchedAccounts
+        console.log(`Searched Accounts`, this.searchedAccounts)
+      })
+
+    }
+  }
+
+  get loadedAccounts(){
+    if (this.searchString !== '' && this.searchString.length > 0){
+      return this.searchedAccounts
+    } else return this.accounts
+  }
+  set loadedAccounts(value: AccountDataModel[]){
+    if (this.searchString !== '' && this.searchString.length > 0){
+      this.searchedAccounts = value
+    }
+  }
 
   toggleAccountDetailsInTable(row: AccountDataModel) {
     console.log('get the total number of claims for the account', row, typeof row)
@@ -165,6 +195,7 @@ export default class Account extends mixins(DataMixins) {
   created(): void {
     account.fetchAllAccounts().then(() => {
       this.accounts = account.allAccounts
+      this.loadedAccounts = account.allAccounts
     })
 
   }

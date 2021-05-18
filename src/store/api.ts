@@ -13,6 +13,16 @@ export async function getAccounts(): Promise<AccountResponse | undefined>{
         console.error(e)
     }
 }
+export async function searchAccount(searchKeyword: string): Promise<AccountResponse | undefined>{
+    try {
+        const response = await receeveApi.get('/accounts?', {params: {
+            q: searchKeyword
+            }})
+        return response.data as AccountResponse;
+    } catch (e){
+        console.error(e)
+    }
+}
 export async function getSingleAccount(accountId: string): Promise<AccountDataModel | undefined>{
     try {
         const response = await receeveApi.get(`/accounts/${accountId}`)

@@ -13,6 +13,7 @@ import * as api from "@/store/api";
 
 class AccountsModule extends  VuexModule{
     allAccounts: AccountDataModel[] = []
+    searchedAccounts: AccountDataModel[] = []
     singleAccount?: AccountDataModel | null = null;
     accountLoading: boolean = true
 
@@ -20,6 +21,12 @@ class AccountsModule extends  VuexModule{
     setAccounts(accounts: AccountDataModel[]) {
         this.allAccounts = accounts
         setTimeout(() => {this.accountLoading = false}, 200);
+
+    }
+    @Mutation
+    setSearchedAccounts(accounts: AccountDataModel[]) {
+        this.searchedAccounts = accounts
+        // setTimeout(() => {this.accountLoading = false}, 200);
 
     }
 
@@ -35,6 +42,10 @@ class AccountsModule extends  VuexModule{
     @Action({commit: 'setSingleAccountInfo'})
     async fetchSingleAccountInfo(accountId: string){
         return await api.getSingleAccount(accountId)
+    }
+    @Action({commit: 'setSearchedAccounts'})
+    async searchAccounts(searchKeyword: string){
+        return await api.searchAccount(searchKeyword)
     }
 }
 

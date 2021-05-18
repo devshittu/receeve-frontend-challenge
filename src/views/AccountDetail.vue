@@ -11,7 +11,7 @@
 
       <div class="media-content">
         <div class="content">
-<!--          {{accountDetails2.debtor}}-->
+          <!--          {{accountDetails2.debtor}}-->
           <p>
             <strong class="title pb-1">
               {{ accountDetails.debtor.title !== null ? accountDetails.debtor.title : '' }}
@@ -21,10 +21,10 @@
             <span class="subtitle">
           <hr>
 
-            <span class="pb-1">
+          <span class="pb-1">
                 <strong>Email: </strong>{{
-                accountDetails.debtor.email
-              }} &nbsp; &nbsp; &nbsp;
+              accountDetails.debtor.email
+            }} &nbsp; &nbsp; &nbsp;
               <br>
               <strong>Phone: </strong>{{ accountDetails.debtor.mobilePhone }}
             </span>
@@ -61,23 +61,67 @@
 
           type="is-info"
 
-          default-sort="user.fullName"
+          default-sort="status"
           aria-next-label="Next page"
           aria-previous-label="Previous page"
           aria-page-label="Page"
           aria-current-label="Current page"
           icon-pack="fas">
 
-        <b-table-column field="firstName" label="Name" sortable v-slot="props">
-          {{ props.row.accountId }}
+        <b-table-column field="desc" label="Description" sortable v-slot="props">
+
+          <span v-if="props.row.status === 'PAID'">
+            {{
+              'Paid on ' + new Date(props.row.paidAt).toLocaleDateString("en-US", {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })
+            }}
+            ({{props.row.id}})
+          </span>
+          <span v-if="props.row.status === 'DELETED'">
+            {{
+              'Deleted on ' + new Date(props.row.deletedAt).toLocaleDateString("en-US", {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })
+            }}
+            ({{props.row.id}})
+          </span>
+          <span v-if="props.row.status === 'OPEN'">
+
+            {{
+              'Due on ' + new Date(props.row.dueDate).toLocaleDateString("en-US", {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })
+            }}
+            ({{props.row.id}})
+          </span>
+
         </b-table-column>
 
         <b-table-column field="baseAmount" label="Base Amount" sortable v-slot="props">
-          {{ new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR' }).format(props.row.baseAmount/100)}}
+          {{ new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(props.row.baseAmount / 100) }}
         </b-table-column>
 
         <b-table-column field="baseAmount" label="Fees" sortable v-slot="props">
-          {{ new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR' }).format(props.row.fees/100)}}
+          {{ new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(props.row.fees / 100) }}
         </b-table-column>
         <b-table-column field="Due Date" label="Due Date" sortable v-slot="props">
           {{ props.row.dueDate }}
@@ -138,9 +182,12 @@ export default class AccountDetail extends mixins(DataMixins) {
   currentPage = 1;
   perPage = 20
 
-  mounted():void{
-    account.fetchSingleAccountInfo(this.$route.params.accountId).then(() =>{
-      setTimeout(() => {this.accountDetails = account.singleAccount; this.accountLoading= false}, 20);
+  mounted(): void {
+    account.fetchSingleAccountInfo(this.$route.params.accountId).then(() => {
+      setTimeout(() => {
+        this.accountDetails = account.singleAccount;
+        this.accountLoading = false
+      }, 20);
     })
   }
 }
