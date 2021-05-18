@@ -1,10 +1,11 @@
 <template>
   <div>
+
     <h1 class="title" v-if="loading">Dashboard Loading...</h1>
-    <section class="section" v-if="!loading">
+    <section class="" v-if="!loading">
 
       <section class="hero ">
-        <div class="hero-body px-0">
+        <div class="hero-body px-0 pt-0">
 
           <p class="title">
             <span>Dashboard</span>
@@ -14,6 +15,7 @@
           </p>
         </div>
       </section>
+
 
       <b-field grouped group-multiline>
 
@@ -28,10 +30,8 @@
 
 
       </b-field>
-
       <template v-if="showBarChart">
       <Bar
-          id="barChartId"
           :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
           :labels="barData.labels"
           :colors="barChartDataSet.backgroundColor"
@@ -45,7 +45,6 @@
 
       <br>
           <Doughnut
-              id="doughnutChartId"
               :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
               :labels="barData.labels"
               :colors="barChartDataSet.borderColor"
@@ -72,7 +71,7 @@ export default class Dashboard extends mixins(DataMixins) {
 
   loading = true
   showBarChart = true
-  useFeesAsChartBaseMetric = true
+  useFeesAsChartBaseMetric = false
   barChartDataSet = {
     label: 'This charts visualizes aggregate of the entire deleted, open, and paid claims in the system regardless of the debtor',
     data: [12, 19, 5],

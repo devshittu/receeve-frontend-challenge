@@ -22,25 +22,60 @@ export default class Bar extends Vue {
     }
   })
   readonly options: object | undefined
-
+/*
+let jsobj: object = '{  "type":"bar",
+  "data":{
+    "labels":[
+      "Red",
+    ],
+    "datasets":[
+      {
+        "label":"# of Votes",
+        "data":[
+          12
+        ],
+        "backgroundColor":[
+          "rgba(255, 99, 132, 0.2)",
+        ],
+        "borderColor":[
+          "rgba(255, 99, 132, 1)",
+        ],
+        "borderWidth":1
+      }
+    ]
+  },
+  "options":{
+    "scales":{
+      "yAxes":[
+        {
+          "ticks":{
+            "beginAtZero":true
+          }
+        }
+      ]
+    }
+  }
+}';*/
 
   mounted() {
-    this.createChart({
+    const chartData: object = {
+      labels: this.labels,
       datasets: [
         {
+          label: this.generalLabel,
           data: this.syncedData,
           backgroundColor: this.colors,
-          label: this.generalLabel,
           borderColor: this.barStrokeColors,
           borderWidth: this.barStrokeWidth,
         }
       ],
-      labels: this.labels
-    })
+    };
+    console.log(`This entered chart Data`, chartData)
+    this.createChart(chartData);
   }
 
   createChart(chartData: object) {
-    const canvas = document.getElementById('bar') as HTMLCanvasElement
+    const canvas = document.getElementById('bar') as HTMLCanvasElement;
     const options = {
       type: 'bar',
       data: chartData,

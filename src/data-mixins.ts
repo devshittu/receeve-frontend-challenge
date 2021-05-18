@@ -10,7 +10,6 @@ export default class DataMixins extends Vue {
     allClaims: ClaimDataModel[] = []
 
     get getAllClaims(): ClaimDataModel[] {
-        // const { name, ingredients, steps } = this.recipe;
         return this.allClaims
     }
 
