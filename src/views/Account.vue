@@ -145,9 +145,6 @@ import claims from "@/store/modules/claims";
 @Component
 export default class Account extends mixins(DataMixins) {
   accounts: AccountDataModel[] = [];
-  // loadedAccounts: AccountDataModel[] = [];
-  // old accounts: AccountDataModel[] = [];
-  populateAccount : AccountDataModel[] = [];
   searchedAccounts: AccountDataModel[] = [];
   isPaginated = true;
   isPaginationSimple = false;
@@ -163,7 +160,6 @@ export default class Account extends mixins(DataMixins) {
       console.log('')
       account.searchAccounts(this.searchString).then(()=>{
         this.searchedAccounts = account.searchedAccounts
-        console.log(`Searched Accounts`, this.searchedAccounts)
       })
 
     }
@@ -181,7 +177,6 @@ export default class Account extends mixins(DataMixins) {
   }
 
   toggleAccountDetailsInTable(row: AccountDataModel) {
-    console.log('get the total number of claims for the account', row, typeof row)
     this.getSingleAccountClaims(row.id).then(() => {
       this.claims = claims.accountClaims
       row.debtor["totalClaims"] = this.claims.length
