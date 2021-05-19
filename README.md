@@ -70,9 +70,10 @@ automatically run test once new changes are detected.
 yarn test:unit --watch
 ```
 
-For you to see the full navigation items i.e [Dashboard](http://localhost:8080/) and the [Accounts](http://localhost:8080/accounts) page you need to sign in to gain access. You can
+For you to see the full navigation items i.e the [Dashboard](http://localhost:8080/dashboard) and the [Accounts](http://localhost:8080/accounts) page you need to sign in to gain access. You can
 always [Sign in](http://localhost:8080/signin) with the following details: 
 ````
 Email: karina@receeve.com 
 Password: 12345678
 ````
+Please do note that localStorage api was used in the implementation of the fake authentication mechanism. This is so because, of the time constraints
