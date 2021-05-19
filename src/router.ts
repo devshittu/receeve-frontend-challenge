@@ -5,7 +5,7 @@ import Router from 'vue-router';
 import Account from '@/views/Account.vue';
 import AccountDetail from '@/views/AccountDetail.vue';
 import Dashboard from '@/views/Dashboard.vue';
-import Login from "@/views/Login.vue";
+import SignIn from "@/views/SignIn.vue";
 
 Vue.use(Router);
 
@@ -13,7 +13,7 @@ export default new Router({
     mode: "history",
     routes: [
         {
-            path: '/',
+            path: '/dashboard',
             component: Dashboard,
             name: 'dashboard',
             alias: '/home',
@@ -32,9 +32,10 @@ export default new Router({
             name: 'account-details'
         },
         {
-            path: '/login',
-            component: Login,
-            name: 'login',
+            path: '/',
+            component: SignIn,
+            name: 'signin',
+            alias: '/signin',
         },
     ]
 });

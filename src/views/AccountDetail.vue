@@ -43,7 +43,7 @@
     </article>
     <hr>
 
-    <h1 class="title">Account Claims ({{ claims.length }})</h1>
+    <h1 class="title">{{ accountDetails.debtor.firstName}} Claims ({{ claims.length }})</h1>
 
     <div class="section is-paddingless">
 

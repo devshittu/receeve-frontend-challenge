@@ -3894,10 +3894,12 @@
     }
   ],
   "user": {
-    "email": "ks@receeve.com",
+    "email": "karina@receeve.com",
     "password": "12345678",
-    "token": "jwt.token.here",
+    "token": "jwt.dummy.token",
     "username": "karina",
+    "firstName": "Karina",
+    "lastName": "Sternberg",
     "bio": "I work at HR, Receeve",
     "image": null
   }

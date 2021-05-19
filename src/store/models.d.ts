@@ -36,16 +36,22 @@ export interface ClaimDataModel {
     deletedAt?: string | null;
 }
 
+
 export interface UserDataModel {
     email: string;
     token: string;
     username: string;
+    firstName: string;
+    lastName: string;
     bio?: string;
     image?: string;
 }
 export interface UserSignInSubmit {
     email: string;
     password: string;
+}
+export interface UserResponse {
+    user: UserDataModel;
 }
 
 
@@ -59,3 +65,7 @@ export interface ClaimResponse {
     claims: ClaimDataModel[] | null
 }
 
+export interface AuthInfo{
+    token: string | null;
+    user: string | null;
+}

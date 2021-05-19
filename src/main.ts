@@ -8,6 +8,10 @@ import store from "@/store";
 
 Vue.use(Buefy)
 import '@/assets/css/main.css';
+import users from "@/store/modules/users";
+
+// initialize the fake authentication.
+users.checkAuth()
 
 Vue.config.productionTip = false
 

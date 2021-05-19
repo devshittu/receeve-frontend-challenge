@@ -24,7 +24,7 @@
                       size="is-large">
                   </b-icon>
                 </a>
-                <span style="color: white">Karina Joe</span>
+                <span style="color: white">{{isAuthenticated? userInfo.firstName + '  '+ userInfo.lastName : 'Guest'}}</span>
               </p>
             </div>
           </div>
@@ -34,8 +34,9 @@
     <nav class="navbar shadow">
       <div class="container">
         <div class="navbar-menu">
-          <div class="navbar-start bottom-nav ">
-            <router-link to="/" class="navbar-item is-active" tag="a" href="#">
+          <div class="navbar-start bottom-nav " v-if="isAuthenticated">
+
+            <router-link to="/dashboard" class="navbar-item is-active" tag="a" href="#">
               <b-icon
                   pack="fas"
                   icon=" fa-tachometer-alt"
@@ -56,8 +57,31 @@
               &nbsp; <span>Accounts</span>
             </router-link>
           </div>
-          <div class="navbar-end">
-            <router-link to="/login" class="navbar-item" >
+
+          <div class="navbar-start bottom-nav " v-else>
+
+            <router-link to="/" class="navbar-item is-active" tag="a" href="#">
+              <b-icon
+                  pack="fas"
+                  icon=" fa-exclamation-triangle"
+                  size="is-medium has-text-warning-dark">
+              </b-icon>
+
+              &nbsp;
+              <span>Please login to continue</span>
+            </router-link>
+          </div>
+            <div class="navbar-end">
+            <a href="#" @click="signOut" class="navbar-item" v-if="isAuthenticated">
+              <b-icon
+                  pack="fa"
+                  icon=" fa-sign-out"
+                  size="is-medium">
+              </b-icon>
+
+              &nbsp;
+              <span>Sign out</span></a>
+            <router-link to="/signin" class="navbar-item" v-else>
               <b-icon
                   pack="fa"
                   icon=" fa-sign-in"
@@ -75,8 +99,32 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: "AppHeader"
+
+import {Component, Vue, Watch} from "vue-property-decorator";
+import users from "@/store/modules/users";
+@Component({})
+export default class AppHeader extends Vue{
+  // isAuthenticated:boolean = false
+  signOut(){
+    // destroyToken()
+    users.signOut();
+    this.$router.push('/signin')
+  }
+  get isAuthenticated(){
+    return users.isAuthenticated;
+  }
+  get userInfo(){
+    return users.user;
+  }
+  @Watch('isAuthenticated')
+  isAuthenticationChanged(val: boolean) {
+    this.$buefy.toast.open({
+      duration: 5000,
+      message: (val) ? `You are welcome back, ${this.userInfo?.firstName}` : `Good bye! see you soon.`,
+      position: 'is-top',
+      type: (val) ?'is-success': 'is-info'
+    })
+  }
 }
 </script>
 

@@ -15,13 +15,12 @@ import Challenge from './components/Challenge.vue'
 import {Component, Vue} from "vue-property-decorator";
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
-// import {mixins} from "vue-class-component";
-// import DataMixins from "@/data-mixins";
 
 @Component({components: {AppFooter, AppHeader, Challenge}})
 export default class App  extends Vue  {
   mounted(): void {
   }
+
 }
 </script>
 

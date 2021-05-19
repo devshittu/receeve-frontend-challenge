@@ -172,6 +172,7 @@ export default class Dashboard extends mixins(DataMixins) {
       this.deletedClaimsTotal = this.getAggregateOnClaims(this.deletedClaims, theKey2Use)
       this.loading = false
     }, 600);
+
   }
 }
 </script>
