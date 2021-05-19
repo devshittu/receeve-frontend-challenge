@@ -85,7 +85,7 @@ I have implemented the solution for the challenge as the instruction stated in t
 6. I implemented a sample unit tests of which 2 passes with 1 fail.
 7. I have updated the README.md file
 
-### What I still wish to add but due to time constraint
+### What I still wish.
 1. Vue animation and transition.
 2. The Vuex-ORM plugin it makes it really easy working with an array of objects.
 ###My take-away from this challenge:
@@ -96,7 +96,7 @@ Having clone the repo to your local machine, run this instructions in your termi
 
 > yarn challenge
 
-Please swap out the npm for yarn if npm is your preffered package manager.
+Please swap out the npm for yarn if npm is your preferred package manager.
 Then visit this link or copy and paste the following in your browser
 
 ````
@@ -110,4 +110,4 @@ always signin with the following details:
 Email: karina@receeve.com 
 Password: 12345678
 ````
-Please do note that localStorage api was used in the implementation of the fake authentication mechanism. This is so because, of the time constraints
+Please do note that localStorage api was used in the implementation of the fake authentication mechanism. I am also aware of storing sensitive information in the localstorage which I do not want to do in the real life projects.
