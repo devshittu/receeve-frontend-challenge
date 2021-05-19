@@ -7,11 +7,12 @@
           <a class="navbar-item" href="/">
             <img src="https://receeve.com/wp-content/uploads/2020/08/receeve_logo.svg">
           </a>
-          <div class="navbar-burger burger" data-target="">
+          <div class="navbar-burger app-navbar-burger"  :class="{'is-active': menuToggle}" data-target="navbar" @click="toggleMenu">
             <span></span>
             <span></span>
             <span></span>
           </div>
+<!--          id="navbarBasicExample" class="navbar-menu"-->
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
@@ -24,7 +25,8 @@
                       size="is-large">
                   </b-icon>
                 </a>
-                <span style="color: white">{{isAuthenticated? userInfo.firstName + '  '+ userInfo.lastName : 'Guest'}}</span>
+                <span
+                    style="color: white">{{ isAuthenticated ? userInfo.firstName + '  ' + userInfo.lastName : 'Guest' }}</span>
               </p>
             </div>
           </div>
@@ -33,7 +35,7 @@
     </nav>
     <nav class="navbar shadow">
       <div class="container">
-        <div class="navbar-menu">
+        <div class="navbar-menu" :class="{'is-active': menuToggle}" id="navbar">
           <div class="navbar-start bottom-nav " v-if="isAuthenticated">
 
             <router-link to="/dashboard" class="navbar-item is-active" tag="a" href="#">
@@ -47,7 +49,7 @@
               <span>Dashboard</span>
             </router-link>
 
-            <router-link to="/accounts" class="navbar-item " tag="a" >
+            <router-link to="/accounts" class="navbar-item " tag="a">
 
               <b-icon
                   pack="fa"
@@ -71,7 +73,7 @@
               <span>Please login to continue</span>
             </router-link>
           </div>
-            <div class="navbar-end">
+          <div class="navbar-end">
             <a href="#" @click="signOut" class="navbar-item" v-if="isAuthenticated">
               <b-icon
                   pack="fa"
@@ -102,27 +104,36 @@
 
 import {Component, Vue, Watch} from "vue-property-decorator";
 import users from "@/store/modules/users";
+
 @Component({})
-export default class AppHeader extends Vue{
+export default class AppHeader extends Vue {
   // isAuthenticated:boolean = false
-  signOut(){
+  menuToggle: boolean = false
+
+  signOut() {
     // destroyToken()
     users.signOut();
     this.$router.push('/signin')
   }
-  get isAuthenticated(){
+  toggleMenu(){
+    this.menuToggle = !this.menuToggle;
+  }
+
+  get isAuthenticated() {
     return users.isAuthenticated;
   }
-  get userInfo(){
+
+  get userInfo() {
     return users.user;
   }
+
   @Watch('isAuthenticated')
   isAuthenticationChanged(val: boolean) {
     this.$buefy.toast.open({
       duration: 5000,
       message: (val) ? `You are welcome back, ${this.userInfo?.firstName}` : `Good bye! see you soon.`,
       position: 'is-top',
-      type: (val) ?'is-success': 'is-info'
+      type: (val) ? 'is-success' : 'is-info'
     })
   }
 }

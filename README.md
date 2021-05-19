@@ -43,6 +43,7 @@ I have implemented the solution for the challenge as the instruction stated in t
 6. Working and manipulating array of objects.
 6. I implemented a sample unit tests of which 2 passes with 1 fail.
 7. I have updated the README.md file
+8. I have also hosted a live version on the [Github Pages](https://devshittu.github.io/receeve-frontend-challenge) 
 
 ### What I still wish to add
 1. Vue animation and transition.
@@ -73,6 +74,6 @@ Password: 12345678
 ````
 Please do note that localStorage api was used in the implementation of the fake authentication mechanism. I am also aware of storing sensitive information in the localstorage which I do not want to do in the real life projects.
 
-I have also hosted a live version on the [Github Pages](https://devshittu.github.io/receeve-frontend-challenge) and can be accessed via
+I have also hosted a live version on the [Github Pages](https://devshittu.github.io/receeve-frontend-challenge) and can be accessed via the link below.
 
 > https://devshittu.github.io/receeve-frontend-challenge
