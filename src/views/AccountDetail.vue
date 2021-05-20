@@ -43,7 +43,7 @@
     </article>
     <hr>
 
-    <h1 class="title">{{ accountDetails.debtor.firstName}} Claims ({{ claims.length }})</h1>
+    <h1 class="title">{{ accountDetails.debtor.firstName }} Claims ({{ claims.length }})</h1>
 
     <div class="section is-paddingless">
 
@@ -69,59 +69,27 @@
           icon-pack="fas">
 
         <b-table-column field="desc" label="Description" sortable v-slot="props">
-
           <span v-if="props.row.status === 'PAID'">
-            {{
-              'Paid on ' + new Date(props.row.paidAt).toLocaleDateString("en-US", {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-                weekday: 'short',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })
-            }}
-            ({{props.row.id}})
+          Paid on {{ props.row.paidAt | date_format }}
+            ({{ props.row.id }})
           </span>
           <span v-if="props.row.status === 'DELETED'">
-            {{
-              'Deleted on ' + new Date(props.row.deletedAt).toLocaleDateString("en-US", {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-                weekday: 'short',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })
-            }}
-            ({{props.row.id}})
+            Deleted on {{ props.row.deletedAt | date_format }}
+            ({{ props.row.id }})
           </span>
           <span v-if="props.row.status === 'OPEN'">
-
-            {{
-              'Due on ' + new Date(props.row.dueDate).toLocaleDateString("en-US", {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-                weekday: 'short',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })
-            }}
-            ({{props.row.id}})
+            Due on {{ props.row.dueDate | date_format }}
+            ({{ props.row.id }})
           </span>
 
         </b-table-column>
 
         <b-table-column field="baseAmount" label="Base Amount" sortable v-slot="props">
-          {{ new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(props.row.baseAmount / 100) }}
+          {{ props.row.baseAmount | currency_format }}
         </b-table-column>
 
-        <b-table-column field="baseAmount" label="Fees" sortable v-slot="props">
-          {{ new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(props.row.fees / 100) }}
+        <b-table-column field="feesAmount" label="Fees" sortable v-slot="props">
+          {{ props.row.fees | currency_format}}
         </b-table-column>
         <b-table-column field="Due Date" label="Due Date" sortable v-slot="props">
           {{ props.row.dueDate }}
@@ -168,7 +136,22 @@ import account from "@/store/modules/accounts";
 import DataMixins from "@/data-mixins";
 import {AccountDataModel} from "@/store/models";
 
-@Component
+@Component({
+  name: 'AccountDetail', filters: {
+    currency_format: (amount) => { return new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(amount / 100) },
+    date_format: (value: string) => {
+      return new Date(value).toLocaleDateString("en-US", {
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    }
+  }
+})
 export default class AccountDetail extends mixins(DataMixins) {
   accountDetails: AccountDataModel | null | undefined = null;
   accountLoading = true;
@@ -190,6 +173,8 @@ export default class AccountDetail extends mixins(DataMixins) {
       }, 20);
     })
   }
+
+
 }
 </script>
 <style scoped>

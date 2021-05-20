@@ -19,36 +19,38 @@
 
       <b-field grouped group-multiline>
 
-      <div class="control is-flex">
-        <b-switch v-model="showBarChart" type="is-info">Switch to {{ (showBarChart) ? `Doughnut` : `Bar`}} chart</b-switch>
-      </div>
+        <div class="control is-flex">
+          <b-switch v-model="showBarChart" type="is-info">Switch to {{ (showBarChart) ? `Doughnut` : `Bar` }} chart
+          </b-switch>
+        </div>
 
-      <div class="control is-flex">
-        <b-switch v-model="useFeesAsChartBaseMetric" type="is-info" disabled>Switch to view charts for
-          {{ (useFeesAsChartBaseMetric) ? `base amount` : `fees` }} chart</b-switch>
-      </div>
+        <div class="control is-flex">
+          <b-switch v-model="useFeesAsChartBaseMetric" type="is-info" disabled>Switch to view charts for
+            {{ (useFeesAsChartBaseMetric) ? `base amount` : `fees` }} chart
+          </b-switch>
+        </div>
 
 
       </b-field>
       <template v-if="showBarChart">
-      <Bar
-          :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
-          :labels="barData.labels"
-          :colors="barChartDataSet.backgroundColor"
-          :general-label="barChartDataSet.label"
-          :bar-stroke-colors="barChartDataSet.borderColor"
-          :bar-stroke-width="1"
-          :options="barDataOptions"
-      />
+        <Bar
+            :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
+            :labels="barData.labels"
+            :colors="barChartDataSet.backgroundColor"
+            :general-label="barChartDataSet.label"
+            :bar-stroke-colors="barChartDataSet.borderColor"
+            :bar-stroke-width="1"
+            :options="barDataOptions"
+        />
       </template>
       <template v-else>
 
-      <br>
-          <Doughnut
-              :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
-              :labels="barData.labels"
-              :colors="barChartDataSet.borderColor"
-          />
+        <br>
+        <Doughnut
+            :data="[this.deletedClaimsTotal, this.openClaimsTotal, this.paidClaimsTotal]"
+            :labels="barData.labels"
+            :colors="barChartDataSet.borderColor"
+        />
       </template>
     </section>
 
@@ -65,7 +67,7 @@ import DataMixins from "@/data-mixins";
 import {ClaimDataModel} from "@/store/models";
 
 @Component({
-  components: {Bar, Doughnut}
+  components: {Bar, Doughnut},
 })
 export default class Dashboard extends mixins(DataMixins) {
 
@@ -98,8 +100,8 @@ export default class Dashboard extends mixins(DataMixins) {
         ticks: {
           beginAtZero: true,
           // Include a dollar sign in the ticks
-          callback: function(value: number) {
-            return new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR' }).format(value)
+          callback: function (value: number) {
+            return new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(value)
           }
         }
       }]
