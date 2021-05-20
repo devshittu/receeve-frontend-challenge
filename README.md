@@ -78,4 +78,4 @@ I have also hosted a live version on the [Github Pages](https://devshittu.github
 
 > https://devshittu.github.io/receeve-frontend-challenge
 
-It's  quite unfortunate that the data (restful points) is not loading as it should.
+It's  quite unfortunate that the data (restful points) is not loading in production (Github Pages) as it should.
