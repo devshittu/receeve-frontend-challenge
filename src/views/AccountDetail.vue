@@ -138,7 +138,7 @@ import {AccountDataModel} from "@/store/models";
 
 @Component({
   name: 'AccountDetail', filters: {
-    currency_format: (amount) => { return new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(amount / 100) },
+    currency_format: (amount: number) => { return new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'EUR'}).format(amount / 100) },
     date_format: (value: string) => {
       return new Date(value).toLocaleDateString("en-US", {
         hour12: true,
