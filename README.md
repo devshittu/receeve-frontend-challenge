@@ -77,3 +77,5 @@ Please do note that localStorage api was used in the implementation of the fake 
 I have also hosted a live version on the [Github Pages](https://devshittu.github.io/receeve-frontend-challenge) and can be accessed via the link below.
 
 > https://devshittu.github.io/receeve-frontend-challenge
+
+It's  quite unfortunate that the data (restful points) is not loading as it should.
